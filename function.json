@@ -1,0 +1,96 @@
+{
+  "type": "vector.function",
+  "output_length": {
+    "$starlark": "len(input)"
+  },
+  "input_split": {
+    "$starlark": "[[x] for x in input]"
+  },
+  "input_merge": {
+    "$starlark": "[item for sublist in input for item in sublist]"
+  },
+  "input_schema": {
+    "type": "array",
+    "description": "An array of cat pictures to be ranked by their expressiveness and charm.",
+    "minItems": 2,
+    "items": {
+      "type": "image",
+      "description": "A cat picture to evaluate for emotional resonance, narrative character, and magnetic presence."
+    }
+  },
+  "tasks": [
+    {
+      "type": "vector.completion",
+      "skip": null,
+      "messages": [
+        {
+          "role": "system",
+          "content": [
+            {
+              "type": "text",
+              "text": "You are curating a collection of cat pictures called 'Pictures That Make You Feel Something.' Every picture in this collection must provoke an immediate, genuine emotional response in the viewer — warmth, humor, tenderness, delight, or quiet melancholy. You value feeling over technical quality. A slightly blurry snapshot that captures a moment of undeniable emotion is worth more than a perfectly lit portrait that stirs nothing."
+            }
+          ]
+        },
+        {
+          "role": "user",
+          "content": [
+            {
+              "type": "text",
+              "text": "Show me the picture you'd add to the collection next."
+            }
+          ]
+        }
+      ],
+      "responses": {
+        "$starlark": "[[x] for x in input]"
+      },
+      "output": {
+        "$starlark": "output[\"scores\"]"
+      }
+    },
+    {
+      "type": "vector.completion",
+      "skip": null,
+      "messages": [
+        {
+          "role": "user",
+          "content": [
+            {
+              "type": "text",
+              "text": "I'm making a photo book called 'Cat Characters' — every picture in it should feel like a portrait of a specific individual. You should be able to look at the picture and sense who this cat is — their personality, their mood, the story of what's happening around them. I want pictures that feel like a single frame pulled from a much larger life, where the cat's nature comes through clearly — curiosity, mischief, dignity, playfulness, warmth. Not anonymous snapshots of just any cat in just any moment. Show me the picture that belongs in this book."
+            }
+          ]
+        }
+      ],
+      "responses": {
+        "$starlark": "[[x] for x in input]"
+      },
+      "output": {
+        "$starlark": "output[\"scores\"]"
+      }
+    },
+    {
+      "type": "vector.completion",
+      "skip": null,
+      "messages": [
+        {
+          "role": "user",
+          "content": [
+            {
+              "type": "text",
+              "text": "I need to pick the single best cat picture to post online — the one that will make people stop scrolling and actually look. I don't care about technical perfection. I want the picture with the most raw stopping power — the one that feels alive, that reaches out and grabs your attention, that you simply can't scroll past. Whether it's dramatic, hilarious, or unexpectedly tender, it has to demand a reaction. Show me the picture."
+            }
+          ]
+        }
+      ],
+      "responses": {
+        "$starlark": "[[x] for x in input]"
+      },
+      "output": {
+        "$starlark": "output[\"scores\"]"
+      }
+    }
+  ],
+  "description": "Ranks cat pictures by their expressiveness and charm. Evaluates each image for emotional resonance, narrative character, and magnetic presence — surfacing pictures that convey genuine personality and feeling over those that are technically sound but emotionally flat."
+}
